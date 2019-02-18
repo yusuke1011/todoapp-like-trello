@@ -8,6 +8,9 @@
       <h2 class="subtitle">
         My striking Nuxt.js project
       </h2>
+      <h2 class="subtitle">
+        api response result : {{ response }}  
+      </h2>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -30,6 +33,21 @@ import Logo from '~/components/Logo.vue'
 export default {
   components: {
     Logo
+  },
+  data: function() {
+    return {
+      response: null
+    }
+  },
+  mounted: function() {
+    this.$axios
+      .$get('/api/test')
+      .then(response => {
+        this.response = response.test
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>
