@@ -12,9 +12,17 @@ const STATUS_CODES = {
 //   D: Delete
 module.exports = {
   // Read
-  getTodos(req, res) {
+  async getTodos(req, res) {
     console.log('DBからデータを取得します');
-    send(res, STATUS_CODES.OK, '`getTotos` should return todo list from DB', false);
+    
+    const todos = await Todo.findAll({
+      order: [
+        ['id', 'ASC']
+      ],
+      raw: true
+    });
+
+    send(res, STATUS_CODES.OK, formatResponseData({todos}));
   },
   // Create
   postTodo(req, res){
