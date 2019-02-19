@@ -41,9 +41,9 @@ export default {
   },
   mounted: function() {
     this.$axios
-      .$get('/api/test')
+      .$get('/api/todos')
       .then(response => {
-        this.response = response.test
+        console.log(response,'aaa');
       })
       .catch(error => {
         console.log(error)
