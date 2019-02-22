@@ -19,15 +19,21 @@ module.exports = {
   async getTodos(req, res) {
     console.log('DBからデータを取得します');
 
-    //idの昇順でデータを取得する
-    const todos = await models.Todos.findAll({
-      order: [
-        ['id', 'ASC']
-      ],
-      raw: true
-    });
-
-    send(res, STATUS_CODES.OK, formatResponseData({todos}));
+    try{
+      //idの昇順でデータを取得する
+      const todos = await models.Todos.findAll({
+        order: [
+          ['id', 'ASC']
+        ],
+        raw: true
+      });
+      send(res, STATUS_CODES.OK, formatResponseData({todos}));
+    }
+    catch(error){
+      send(res, STATUS_CODES.BAD_REQUEST, formatResponseData({
+        error: error.message
+      }));
+    }
   },
   // Create
   postTodo(req, res){

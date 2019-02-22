@@ -44,7 +44,7 @@ export default {
         console.log('取得データ：',response.data.todos);
       })
       .catch(error => {
-        console.log(error)
+        console.log('エラー!!：',response.data.error);
       })
   }
 }
