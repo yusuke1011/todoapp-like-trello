@@ -56,6 +56,16 @@ export default {
       .catch(error => {
         console.log('エラー!!：',response.data.error);
       })
+
+    //DBのデータを更新
+    this.$axios
+      .$put('/api/todos', {id: 1, title: 'updated title', body: 'updated body'})
+      .then(response => {
+        console.log('更新データ：',response.data.todo);
+      })
+      .catch(error => {
+        console.log('エラー!!：',response.data.error);
+      })
   }
 }
 </script>
