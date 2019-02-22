@@ -1,9 +1,13 @@
 'use strict'
 
+const models = require('../models/index');
+
 const STATUS_CODES = {
   OK: 200,
   BAD_REQUEST: 400
 };
+
+const formatResponseData = (data) => ({ data });
 
 // Controllers (CRUD)
 //   C: Create
@@ -14,8 +18,9 @@ module.exports = {
   // Read
   async getTodos(req, res) {
     console.log('DBからデータを取得します');
-    
-    const todos = await Todo.findAll({
+
+    //idの昇順でデータを取得する
+    const todos = await models.Todos.findAll({
       order: [
         ['id', 'ASC']
       ],

@@ -8,9 +8,6 @@
       <h2 class="subtitle">
         My striking Nuxt.js project
       </h2>
-      <h2 class="subtitle">
-        api response result : {{ response }}  
-      </h2>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -40,10 +37,11 @@ export default {
     }
   },
   mounted: function() {
+    //DBからtodoデータを取得する
     this.$axios
       .$get('/api/todos')
       .then(response => {
-        console.log(response,'aaa');
+        console.log('取得データ：',response.data.todos);
       })
       .catch(error => {
         console.log(error)
