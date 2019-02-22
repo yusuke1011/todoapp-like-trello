@@ -36,9 +36,32 @@ module.exports = {
     }
   },
   // Create
-  postTodo(req, res){
+  async postTodo(req, res){
     console.log('DBを作成します');
-    send(res, STATUS_CODES.OK, '`postTodo` should create a new todo to DB', false);
+
+    let transaction;
+    try {
+      //トランザクション開始
+      transaction = await models.sequelize.transaction();
+
+      //データベース更新
+      const todo = await models.Todos.create({
+        title: req.body.title,
+        body: req.body.body
+      }, { transaction });
+
+      //トランザクション確定
+      await transaction.commit();
+
+      send(res, STATUS_CODES.OK, formatResponseData({todo}), false);
+    } catch (error) {
+      //トランザクション取り消し
+      await transaction.rollback();
+
+      send(res, STATUS_CODES.BAD_REQUEST, formatResponseData({
+        error: error.message
+      }));
+    }
   },
   // Update
   putTodo(req, res){

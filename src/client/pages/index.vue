@@ -46,6 +46,16 @@ export default {
       .catch(error => {
         console.log('エラー!!：',response.data.error);
       })
+
+    //データをDBに保存
+    this.$axios
+      .$post('/api/todos', {title: 'title', body: 'body'})
+      .then(response => {
+        console.log('追加データ：',response.data.todo);
+      })
+      .catch(error => {
+        console.log('エラー!!：',response.data.error);
+      })
   }
 }
 </script>
