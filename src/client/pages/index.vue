@@ -66,6 +66,16 @@ export default {
       .catch(error => {
         console.log('エラー!!：',response.data.error);
       })
+
+    //DBのデータを削除
+    this.$axios
+      .$delete('/api/todos', {data: {id: 3}})
+      .then(response => {
+        console.log('削除データ：',response.data.todo);
+      })
+      .catch(error => {
+        console.log('エラー!!：',response.data.error);
+      })
   }
 }
 </script>

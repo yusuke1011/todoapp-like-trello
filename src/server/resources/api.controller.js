@@ -97,11 +97,35 @@ module.exports = {
     }
   },
   // Delete
-  deleteTodo(req, res){
+  async deleteTodo(req, res){
     console.log('DBを削除します');
-    send(res, STATUS_CODES.OK, '`deleteTodo` should delete a todo from DB', false);
+
+    let transaction;
+    try {
+      //トランザクション開始
+      transaction = await models.sequelize.transaction();
+
+      //データベース更新
+      const todo = await models.Todos.findById(req.body.id, { transaction });
+      if (!todo) {
+        throw new Error(`Couldn't find a todo of ID ${req.body.id}`);
+      }
+      await todo.destroy({ transaction });
+
+      //トランザクション確定
+      await transaction.commit();
+
+      send(res, STATUS_CODES.OK, formatResponseData({todo}), false);
+    } catch (error) {
+      //トランザクション取り消し
+      await transaction.rollback();
+      send(res, STATUS_CODES.BAD_REQUEST, formatResponseData({
+        error: error.message
+      }));
+    }
   }
 }
+
 
 /***Helpers***/
 const send = (res, code, data, json = true) => {
