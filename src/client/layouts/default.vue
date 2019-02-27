@@ -1,8 +1,24 @@
 <template>
   <div>
+    <Header />
     <nuxt />
   </div>
 </template>
+
+<script>
+import Header from '~/components/Header.vue'
+
+export default {
+  components: {
+    Header
+  },
+  methods: {
+    home() {
+      this.$router.push("/");
+    }
+  }
+}
+</script>
 
 <style>
 html {
@@ -51,5 +67,17 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.header {
+  background-color: #35495e;
+  height: 50px;
+}
+
+.header-title{
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  cursor: hand;
 }
 </style>
