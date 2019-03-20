@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all">
     <Header />
     <nuxt />
   </div>
@@ -79,5 +79,15 @@ html {
   color: white;
   cursor: pointer;
   cursor: hand;
+}
+
+.all{
+  background: rgb(237, 241, 241);
+    display: flex;
+    flex-direction: column;
+}
+
+div {
+  display: block;
 }
 </style>
